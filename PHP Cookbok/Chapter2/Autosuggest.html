@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <style>
+        label { width:80px; float:left; padding:4px; }
+        form { width:320px; }
+        input, textarea {
+            width:200px; border:1px solid black;
+            border-radius: 5px; float:right; padding:5px;
+        }
+        input[type=submit] { cursor:pointer;
+            background-color:green; color:#FFF; }
+        input[disabled=disabled] { background-color:#d1d1d1; }
+        .fieldRow { margin:10px 10px; overflow:hidden; }
+        .validationFailed { border: 1px solid red; }
+        .validationPassed { border: 1px solid green; }
+        .datalistPlaceHolder {
+            width:200px; border:1px solid black;
+            border-radius: 5px;
+            float:right; padding:5px; display:none;
+        }
+        ul.datalistPlaceHolder li { list-style: none;
+            cursor:pointer; padding:4px; }
+        ul.datalistPlaceHolder li:hover { color:#FFF;
+            background-color:#000; }
+    </style>
+    <script src="../../Javascript/jquery-1.11.1.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            ajaxDropdownInit();
+        });
+
+        var timerId;
+
+        var ajaxDropdownInit =  function(){
+            $('.ajaxDropdown').keyup(function() {
+                var string = $(this).val();
+                clearTimeout (timerId);
+                timerId = setTimeout(function(){
+                    var jqxhr = $.get("Autosuggest.php", {'string':string}, function(data) {
+                        if(data)
+                            $('.datalistPlaceHolder').show().html(data);
+                        else
+                            $('.datalistPlaceHolder').hide()
+
+//                        $('.datalistPlaceHolder li').click(function(){
+//                            console.log('item clicked');
+//                        });
+                    });
+                }, 500 );
+            });
+
+            $('.datalistPlaceHolder li').click(function(){
+                console.log('item clicked');
+            });
+        }
+    </script>
+</head>
+<body>
+<h1>Dynamic Dropdown</h1>
+
+<form class="simpleValidation">
+    <div class="fieldRow">
+        <label>Skype name:</label>
+
+        <div class="ajaxDropdownPlaceHolder">
+            <input type="text" id="name" name="name"
+                   class="ajaxDropdown" autocomplete="OFF"/>
+            <ul class="datalistPlaceHolder"></ul>
+        </div>
+    </div>
+</form>
+</body>
+</html>
