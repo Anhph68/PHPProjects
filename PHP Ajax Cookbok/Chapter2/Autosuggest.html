@@ -44,16 +44,15 @@
                         else
                             $('.datalistPlaceHolder').hide()
 
-//                        $('.datalistPlaceHolder li').click(function(){
-//                            console.log('item clicked');
-//                        });
+                        $('.datalistPlaceHolder li').click(function(){
+                            $('.ajaxDropdownPlaceHolder .ajaxDropdown').val($(this).text());
+                            $('.datalistPlaceHolder').hide();
+                            console.log($(this).text());
+                        });
                     });
                 }, 500 );
             });
 
-            $('.datalistPlaceHolder li').click(function(){
-                console.log('item clicked');
-            });
         }
     </script>
 </head>
@@ -65,8 +64,7 @@
         <label>Skype name:</label>
 
         <div class="ajaxDropdownPlaceHolder">
-            <input type="text" id="name" name="name"
-                   class="ajaxDropdown" autocomplete="OFF"/>
+            <input type="text" id="name" name="name" class="ajaxDropdown" autocomplete="OFF"/>
             <ul class="datalistPlaceHolder"></ul>
         </div>
     </div>
